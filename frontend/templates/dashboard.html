@@ -1,0 +1,27 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+  <div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>Dashboard</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="aboutus">
+    <div class="container">
+      <!-- REPEAT RESULT -->
+      	<div class="col-sm-12 well">
+<h2>Dashboard</h2>
+Hi, {{ request.session.username }}
+            <div class="clearfix"></div>
+        </div>
+      <!-- REPEAT RESULT -->
+    </div>
+  </div>
+
+{% include "includes/footer.html" %}

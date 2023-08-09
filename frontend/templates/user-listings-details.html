@@ -1,0 +1,198 @@
+{% load static %}
+{% load mathfilters %}
+{% include "includes/header.html" %}
+<style>
+.bids_table tr:first-child td {
+color: #00a591; font-weight: bold;
+}
+</style>
+<!--contact start here-->
+<!--banner-w3layouts-->
+<div class="banner-w3layouts-info" style="margin-top:0px">
+    <!--/search_form -->
+    <div id="banner-w3layouts-info" class="search_top text-center">
+    </div>
+    <!--//banner-w3layouts-info -->
+</div>
+<!--//banner-w3layouts-->
+</div>
+<!--/main-->
+<section class="banner-w3layouts-bottom py-lg-5 py-3" style="padding-top: 0px !important;">
+	<div class="container-fluid" style="padding: 60px">
+		<h3 class="tittle text-center">My Listings</h3>
+		<div class="inner-sec-agileits-w3ls">
+			<p>&nbsp;</p>
+			<div class="row">
+				<div class="col-xs-12 align-center">
+					{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+						<li
+								{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+						</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+				{% if property %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="blog-item">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="entry-meta">
+                                        <h3>SUMMARY</h3><br/>
+                                        <span><b>Type:</b> {{ property.type }}</span>
+                                        <span><b>Location:</b> {{ property.location }}</span>
+                                    </div><br />
+                                    {% if 'is_logged_in' in request.session and request.session.usertype == 'user' %}
+                                    {% endif %}
+                          <div class="col-xs-12" id="map-canvas" style="height: 200px;"></div>
+                        <div class="col-xs-12 widget blog_gallery">
+                            <br/>
+                            <h3>Gallery</h3><br />
+                            {% if property_gallery %}
+                            <ul class="sidebar-gallery" style="list-style: none;">
+                                {% for i in property_gallery %}
+                                <li style="padding-bottom: 5px">
+                                    <a href="{{ i.image }}" rel="prettyPhoto">
+                                        <img width="150"  style="max-height: 100px;"src="{{ i.image }}"
+                                             alt=""/>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                                </div>
+                                <div class="col-sm-9 blog-content">
+                                    <img class="img-responsive img-blog" src="{{ property.image }}" width="100%" style="max-height: 350px;" alt=""/>
+                                    <p>&nbsp;</p>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h4>{{ property.title }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>{{property.description}}</p><br>
+                                            <table class="table table-hover table-bordered" style="color:#353535">
+                                                <tr>
+                                                    <th>Starting Price</th>
+                                                    <td>Rs. {{property.intial_quote_amount}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Person to Contact</th>
+                                                    <td>{{property.mobile}}</td>
+                                                </tr>
+                                                {% if auction_details %}
+                                                <tr>
+                                                    <th>Your last bid</th>
+                                                    <td>Rs. {{auction_details.amount}}</td>
+                                                </tr>
+                                                {% endif %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <h3>Enter your Bid</h3><br />
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form action="" method="POST" novalidate>
+                                                {% csrf_token %}
+  {% if auction_details.status == 'yes' %}
+  {% if auction_details.card_number == null %}
+                                                <h4 style="color:green">You won the auction. Pay 10% of the amount as advance</h4>
+                                                <br />
+                                                <a href="/view-listing-advance-pay/{{ auction_details.id }}" class="btn btn-warning btn-lg" style="color: white; font-weight: bold">Pay Rs. {{ auction_details.amount|mul:0.1|stringformat:".2f" }} </a>
+   {% else %}
+    <h4 style="color:#ffc107">You have paid your advance amount of Rs. {{ auction_details.advance_amount|mul:0.1|stringformat:".2f" }} and confirmed the auction</h4>
+   {% endif %}
+                                                {% else %}
+                                                {% if property.final_status == 'yes' %}
+                                                <h4 style="color:red">Auction closed</h4>
+                                                {% else %}
+{% if property.auction_status == 'opened' %}
+                                                <table class="table table-hover table-bordered" style="color:#353535">
+                                                    <tr>
+                                                        <th>Enter Your Bid</th>
+                                                        <td>
+                                                            {{ form.amount }}
+                                                            {{ form.amount.errors }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" align="center">
+                                                            <button type="submit" class="btn btn-primary submit">Bid
+                                                                here
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                {% else %}
+                                                <h4 style="color:#ffc107">Auction will be online soon</h4>
+                                                <br />
+                                                {% endif %}
+                                                {% endif %}
+   {% endif %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!--/.col-md-8-->
+                                </div>
+                                <!--/.row-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+       <h3>All Bids</h3><br />
+         {% if auction_details_bids %}
+                    <table class="table table-hover bids_table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Result</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+{% for i in auction_details_bids %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.user }}</td>
+                            <td>Rs. {{ i.amount }}</td>
+                             <td>{{ i.date_added }}</td>
+                            <td>
+{% if i.status == 'yes' %}
+<b style="color: green">Winner</b>
+{% else %}
+{% if property.final_status == 'no' %}
+{% else %}
+  <b style="color: red">Lost</b>
+{% endif %}
+{% endif %}
+                            </td>
+                        </tr>
+   {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="col-12">
+                        <p>No quotes yet.</p>
+                    </div>
+                    {% endif %}
+                    </div>
+                </div>
+				{% else %}
+				<div class="col-12">
+					<p>No listings added</p>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+<!--//main-->
+<!--contact end here-->
+{% include "includes/footer.html" %}

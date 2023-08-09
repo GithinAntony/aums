@@ -1,0 +1,63 @@
+{% load static %}
+{% include "includes/admin_header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+<div class="row">
+    <div class="col-12 align-center">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li
+                    {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class="col-12">
+        <h1>All Property</h1>
+
+
+                {% if property %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Reserve Amount</th>
+                        <th scope="col">Initial Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in property %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><img width="150px" height="125px" src="{{ i.image }}"></td>
+                        <td>
+                            {{ i.title }}
+                            <br/>
+                            <span style="color: green; font-weight: bold">{{ i.type }}</span>
+                        </td>
+                        <td>{{ i.description }}</td>
+                        <td>{{ i.reserve_price }}</td>
+                        <td>{{ i.intial_quote_amount }}</td>
+                        <td>
+                            <a class="btn btn-danger btn-sm" href="/emp-listings-delete/{{ i.id }}"> Delete</a>
+                            <a class="btn btn-success btn-sm" href="/site-admin-property-view/{{ i.id }}"> View Auction</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="col-12">
+                    <p>No listings added</p>
+                </div>
+                {% endif %}
+    </div>
+</div>
+{% include "includes/admin_footer.html" %}

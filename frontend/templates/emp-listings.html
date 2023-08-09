@@ -1,0 +1,78 @@
+{% load static %}
+{% include "includes/header.html" %}
+<!--contact start here-->
+<!--banner-w3layouts-->
+<div class="banner-w3layouts-info" style="margin-top:0px">
+    <!--/search_form -->
+    <div id="banner-w3layouts-info" class="search_top text-center">
+    </div>
+    <!--//banner-w3layouts-info -->
+</div>
+<!--//banner-w3layouts-->
+</div>
+<!--/main-->
+<section class="banner-w3layouts-bottom py-lg-5 py-3" style="padding-top: 0px !important;">
+    <div class="container py-lg-4 py-3">
+        <h3 class="tittle text-center">My Listings</h3>
+        <div class="inner-sec-agileits-w3ls">
+            <p>&nbsp;</p>
+            <div class="row">
+                <div class="col-xs-12 align-center">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li
+                                {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {% if property %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Reserve Amount</th>
+                        <th scope="col">Initial Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in property %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><img width="150px" height="125px" src="{{ i.image }}"></td>
+                        <td>
+                            {{ i.title }}
+                            <br/>
+                            <span style="color: green; font-weight: bold">{{ i.type }}</span>
+                        </td>
+                        <td>{{ i.description }}</td>
+                        <td>{{ i.reserve_price }}</td>
+                        <td>{{ i.intial_quote_amount }}</td>
+                        <td>
+                            <a class="btn btn-danger btn-sm" href="/emp-listings-delete/{{ i.id }}"> Delete</a>
+                            <a class="btn btn-warning btn-sm" href="/emp-listings-gallery/{{ i.id }}"> Add Photos</a>
+                            <a class="btn btn-success btn-sm" href="/emp-listings-auction/{{ i.id }}"> View Auction</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="col-12">
+                    <p>No listings added</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--//main-->
+<!--contact end here-->
+{% include "includes/footer.html" %}

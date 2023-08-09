@@ -1,0 +1,112 @@
+{% load static %}
+{% include "includes/header.html" %}
+<div class="banner-w3layouts-info two">
+    <!--/search_form -->
+    <div id="banner-w3layouts-info" class="search_top text-center">
+        <p>Add some discription</p>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Contact</li>
+        </ol>
+    </div>
+    <!--//banner-w3layouts-info -->
+</div>
+<!--//banner-w3layouts-->
+</div>
+<!--/main-->
+<!--/banner-w3layouts-bottom -->
+<section class="banner-w3layouts-bottom py-lg-5 py-3">
+    <div class="container py-lg-4 py-3">
+        <h3 class="tittle text-center mx-auto">Contact Us</h3>
+        <p class="sub text-center mb-lg-5 mb-3">We love to discuss your idea</p>
+        <div class="address row">
+
+            <div class="col-lg-4 address-grid">
+                <div class="row address-info">
+                    <div class="col-md-3 address-left text-center">
+                        <i class="far fa-map"></i>
+                    </div>
+                    <div class="col-md-9 address-right text-left">
+                        <h6>Address</h6>
+                        <p> IHRD, Kattappana
+
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4 address-grid">
+                <div class="row address-info">
+                    <div class="col-md-3 address-left text-center">
+                        <i class="far fa-envelope"></i>
+                    </div>
+                    <div class="col-md-9 address-right text-left">
+                        <h6>Email</h6>
+                        <p>
+                            <a href="mailto:keyguides@aucms.com"> keyguides@aucms.com</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4 address-grid">
+                <div class="row address-info">
+                    <div class="col-md-3 address-left text-center">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="col-md-9 address-right text-left">
+                        <h6>Phone</h6>
+                        <p>+1 9238789799</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="contact_grid_right">
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="col-xs-12 align-center">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li
+                                {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="row contact_left_grid">
+                    <div class="col-md-6 con-left">
+                        <div class="form-group">
+                            <label for="{{ form.name.id_for_label }}" class="my-2">Name</label>
+                            {{ form.name }}
+                            {{ form.name.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 con-right">
+                        <div class="form-group">
+                            <label for="{{ form.message.id_for_label }}">Message</label>
+                            {{ form.message }}
+                            {{ form.message.errors }}
+                        </div>
+                        <input class="form-control" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<section class="contact-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27404345275!2d-118.69191921441556!3d34.02016130939095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos+Angeles%2C+CA%2C+USA!5e0!3m2!1sen!2sin!4v1522474296007"
+            allowfullscreen></iframe>
+</section>
+<!--//banner-w3layouts-bottom -->
+{% include "includes/footer.html" %}

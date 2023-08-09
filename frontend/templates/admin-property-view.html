@@ -1,0 +1,149 @@
+{% load static %}
+{% include "includes/admin_header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+<!--contact start here-->
+<!--banner-w3layouts-->
+<div class="banner-w3layouts-info" style="margin-top:0px">
+    <!--/search_form -->
+    <div id="banner-w3layouts-info" class="search_top text-center">
+    </div>
+    <!--//banner-w3layouts-info -->
+</div>
+<!--//banner-w3layouts-->
+</div>
+<!--/main-->
+<section class="banner-w3layouts-bottom py-lg-5 py-3" style="padding-top: 0px !important;">
+    <div class="container py-lg-4 py-3">
+        <h3 class="tittle text-center">All Auctions</h3>
+        <div class="inner-sec-agileits-w3ls">
+            <p>&nbsp;</p>
+            <div class="row">
+                <div class="col-xs-12 align-center">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li
+                                {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                {% if property %}
+
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Reserve Amount</th>
+                            <th scope="col">Initial Amount</th>
+                            <th>Auction Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td><img width="100px" height="100px" src="{{ property.image }}"></td>
+                            <td>
+                                {{ property.title }}
+                                <br/>
+                                <span style="color: green; font-weight: bold">{{ property.type }}</span>
+                            </td>
+                            <td>{{ property.reserve_price }}</td>
+                            <td>{{ property.intial_quote_amount }}</td>
+                            <td>{{ property.auction_status }}</td>
+                            <td>
+                                 {% if property.final_status != 'yes' %}
+                                {% if property.auction_status == 'opened' %}
+                                  Ongoing
+                                {% else %}
+                               Auction not Started
+                                {% endif %}
+                                {% else %}
+                                <b style="color:red">Auction Ended</b>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="col-lg-12">
+                    <p>No listings added</p>
+                </div>
+                {% endif %}
+
+                <div class="col-lg-12 align-center">
+                    <hr/>
+                    <h5 class="tittle text-center">Bids on the item</h5>
+                    {% if auction_details %}
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Advance Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+{% for i in auction_details %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                              {{ i.user }}
+                            </td>
+                            <td>
+                                {{ i.amount }}
+                            </td>
+
+                            <td>
+
+{% if i.status == 'yes' %}
+<b style="color: green">Winner</b>
+{% else %}
+{% if property.final_status == 'no' %}
+On going
+{% else %}
+  <b style="color: red">Another Won</b>
+{% endif %}
+{% endif %}
+                            </td>
+                            <td>
+                             {% if i.status == 'yes' %}
+                               {% if i.advance_amount == null %}
+                               Not Paid
+                                {% else %}
+                              Rs. {{ i.advance_amount }}
+                             {% endif %}
+                            {% endif %}
+                            </td>
+                        </tr>
+   {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="col-12">
+                        <p>No quotes yet</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+<!--//main-->
+<!--contact end here-->
+{% include "includes/admin_footer.html" %}

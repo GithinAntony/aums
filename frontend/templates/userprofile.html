@@ -1,0 +1,38 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+  <div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>Dashboard</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="aboutus">
+    <div class="container">
+      <!-- REPEAT RESULT -->
+      	<div class="col-sm-12 well">
+<h2>Dashboard</h2>
+  <h1>{{ request.session.username }}</h1>
+  <table>
+       {% for i in user %}
+      <tr><th>Name</th><td>{{ i.name }}</td></tr>
+      <tr><th>Email</th><td>{{ i.email }}</td></tr>
+      <tr><th>Phone Number</th><td>{{ i.phone }}</td></tr>
+      <tr><th>Address</th><td>{{ i.address }}</td></tr>
+      <tr><th>Place</th><td>{{ i.place }}</td></tr>
+        {% endfor %}
+  </table>
+
+
+<div class="clearfix"></div>
+        </div>
+      <!-- REPEAT RESULT -->
+    </div>
+  </div>
+
+{% include "includes/footer.html" %}

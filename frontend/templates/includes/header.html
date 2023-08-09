@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>AUCMS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="keywords" content="Realtie a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" property="" />
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.css' %}" type="text/css" media="all">
+	{% url 'contact' as home_url %}
+	{% if request.get_full_path == home_url %}
+	<link href="{% static 'css/contact.css' %}" rel='stylesheet' type='text/css' />
+    {% endif %}
+	{% url 'gallery' as home_url %}
+	{% if request.get_full_path == home_url %}
+	<link href="{% static 'css/prettyPhoto.css' %}" rel='stylesheet' type='text/css' />
+    {% endif %}
+	<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+	<link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+</head>
+
+<body>
+	<!--/banner-w3layouts-sec-->
+	<div class="banner-w3layouts two min-height-50">
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="index.html">AUCMS</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+				    aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fas fa-bars"></i>
+					</span>
+
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						{% url 'home' as home_url %}
+						<li class="nav-item {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/home">Home
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
+						{% if 'is_logged_in' not in request.session %}
+						<li class="nav-item dropdown ml-xl-2">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+							   data-toggle="dropdown" aria-haspopup="true"
+							   aria-expanded="false">
+								Log in
+								<i class="fas fa-caret-down"></i>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								{% url 'user-login' as home_url %}
+								<a class="dropdown-item {% if request.get_full_path == home_url %} active {% endif %}"
+								   href="/user-login">User Login</a>
+								<div class="dropdown-divider"></div>
+								{% url 'user-register' as home_url %}
+								<a class="dropdown-item {% if request.get_full_path == home_url %} active {% endif %}"
+								   href="/user-register">User Registration</a>
+								<div class="dropdown-divider"></div>
+								{% url 'emp-login' as home_url %}
+								<a class="dropdown-item {% if request.get_full_path == home_url %} active {% endif %}"
+								   href="/emp-login">Employee Login</a>
+								<div class="dropdown-divider"></div>
+								{% url 'emp-register' as home_url %}
+								<a class="dropdown-item {% if request.get_full_path == home_url %} active {% endif %}"
+								   href="/emp-register">Employee Registration</a>
+							</div>
+						</li>
+						{% endif %}
+						{% if 'is_logged_in' in request.session %}
+						{% if request.session.usertype == 'employee' %}
+						{% url 'emp-add-property' as home_url %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/emp-add-property">Add Item</a>
+						</li>
+						{% url 'emp-listings' as home_url %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/emp-listings ">My Listings</a>
+						</li>
+						 {% endif %}
+						{% if request.session.usertype == 'user' %}
+						{% url 'user-view-listings' as home_url %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/user-listings">View Listings</a>
+						</li>
+						 {% endif %}
+
+						 {% endif %}
+						{% url 'gallery' as home_url %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/gallery">Gallery</a>
+						</li>
+						{% url 'about' as home_url %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/about">About Us</a>
+						</li>
+						{% url 'contact' as home_url %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/contact">Contact</a>
+						</li>
+						{% if 'is_logged_in' in request.session %}
+						<li class="nav-item ml-xl-2 {% if request.get_full_path == home_url %} active {% endif %}">
+							<a class="nav-link" href="/logout">({{ request.session.full_name  }}) Logout</a>
+						</li>
+						{% endif %}
+					</ul>
+					<!-- <form class="form-inline my-2 my-lg-0">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form> -->
+				</div>
+			</nav>
+		</header>
+<!--header end here-->

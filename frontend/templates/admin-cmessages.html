@@ -1,0 +1,51 @@
+{% load static %}
+{% include "includes/admin_header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+<div class="row">
+    <div class="col-12 align-center">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li
+                    {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class="col-12">
+        <h1>All Messages</h1>
+        {% if record_details %}
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Message</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in record_details %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.message }}</td>
+                <td><a href="/site-admin-record-delete/{{ i.id }}/cmessages"
+                       class="btn btn-danger btn-sm">Delete</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="col-12">
+            <p>No messages Added</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% include "includes/admin_footer.html" %}

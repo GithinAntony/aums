@@ -1,0 +1,65 @@
+{% load static %}
+{% include "includes/header.html" %}
+<!--contact start here-->
+<!--banner-w3layouts-->
+<div class="banner-w3layouts-info" style="margin-top:0px">
+    <!--/search_form -->
+    <div id="banner-w3layouts-info" class="search_top text-center">
+    </div>
+    <!--//banner-w3layouts-info -->
+</div>
+<!--//banner-w3layouts-->
+</div>
+<!--/main-->
+<section class="banner-w3layouts-bottom py-lg-5 py-3" style="padding-top: 0px !important;">
+	<div class="container py-lg-4 py-3">
+		<h3 class="tittle text-center">My Listings</h3>
+		<div class="inner-sec-agileits-w3ls">
+			<p>&nbsp;</p>
+			<div class="row">
+				<div class="col-xs-12 align-center">
+					{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+						<li
+								{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+						</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+				{% if property %}
+				<div class="row">
+					{% for i in property %}
+					<div class="col-lg-4 customer-main">
+						<div class="card">
+							<div class="card-body">
+								<div class="customer-img">
+									<img src="{{ i.image }}" class="img-fluid rounded">
+								</div>
+								<div class="customer-info text-left py-lg-4 py-2"  >
+									<h4>{{ i.title }}</h4>
+									<p>{{ i.description}}</p>
+									<div class="row  pt-3 mt-3 team-social border-top" style="text-align:center; height: 30px">
+										<div class="col-lg-12" align="center" >
+											<a href="/view-listing-details/{{ i.id }}" class="btn btn-info">View Auction</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% else %}
+				<div class="col-12">
+					<p>No listings added</p>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+<!--//main-->
+<!--contact end here-->
+{% include "includes/footer.html" %}
